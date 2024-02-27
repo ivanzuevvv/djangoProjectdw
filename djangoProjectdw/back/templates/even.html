@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block head %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'back/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'bootstrap/bootstrap2.min.css' %}">
+{% endblock %}
+{% block content %}
+
+
+
+<style>
+.category-dropdown ul {
+  list-style-type: none;
+  padding-left: 1px;
+    margin-top: 10px;
+
+}
+</style>
+
+
+
+
+
+
+
+ <a class="nav-link dropdown-toggle btn btn-primary" style="width: 135px; height: 44px; font-size: 16px; margin-left: 1px; margin-top: 10px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  Отобразить
+</a>
+
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+  <div class="dropdown-divider"></div>
+  <div class="dropdown-submenu">
+    <a class="dropdown-item {% if current_page == 'k' %}active{% endif %}" href="{% url 'k' %}">Все задачи</a>
+    <a class="dropdown-item {% if current_page == 'completed' %}active{% endif %}" href="{% url 'completed' %}">Выполненные</a>
+    <a class="dropdown-item {% if current_page == 'not_completed' %}active{% endif %}" href="{% url 'not_completed' %}">Не выполненные</a>
+  </div>
+</div>
+
+
+
+   {% if evens %}
+
+
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Название станции</th>
+    <th>Цех</th>
+<th>Номер ГПА</th>
+<th>Модификации САУ</th>
+<th>План работ</th>
+<th>Выполнено</th>
+    <th>Квартал 1</th>
+    <th>Квартал 2</th>
+    <th>Квартал 3</th>
+    <th>Квартал 4</th>
+
+<th>Текст</th>
+    <th>Отметка</th>
+
+<div class="category-dropdown">
+
+    <ul>
+    <li class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Выберите категорию<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        {% for category in categories %}
+          <li><a href="{% url 'even' category.name %}">{{ category.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    </ul>
+</div>
+
+</tr>
+</thead>
+<tbody>
+{% for e in evens %}
+<tr>
+<td>{{ e.station }}</td>
+<td>{{ e.department }} </td>
+<td>{{ e.gpa_number }}</td>
+<td>{{ e.sau_modifications }}</td>
+<td>{{ e.plan }}</td>
+<td>{{ e.complete }}</td>
+<td>{{ e.cvartal1 }}</td>
+<td>{{ e.cvartal2 }}</td>
+<td>{{ e.cvartal3 }}</td>
+<td>{{ e.cvartal4 }}</td>
+
+
+
+
+<td>{% if e.text %}
+    {{ e.text }}
+{% endif %}</td>
+<td><a href="{% url 'update' pk=e.pk %}">Отметить</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+
+
+
+   {% endif %}
+{% endblock %}

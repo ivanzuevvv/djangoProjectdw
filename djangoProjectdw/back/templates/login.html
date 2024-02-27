@@ -1,0 +1,96 @@
+{% load static %}
+{% block content %}
+ <link rel="stylesheet" href="{% static 'bootstrap/bootstrap411.min.css' %}">
+
+    <script src="{% static 'bootstrap/bootstrap412.min' %}"></script>
+<script src="{% static 'bootstrap/jquery.min' %}"></script>
+    <div class="container">
+
+
+
+    <div class="container">
+
+
+        <form class="login__form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+
+
+        <style>
+
+            form {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            body {
+                background-image:url("https://sun9-63.userapi.com/impg/RhmgYazrPVJoRifrdV1dPC_L9s9FlH_TPZFevA/q6uvl0T8mA8.jpg?size=1280x720&quality=95&sign=4d906dd08d80616de354be78e2faa6bb&type=album");
+
+
+                background-size: cover;
+                background-position: center;
+            }
+
+            .login__form::before {
+                content: "Вход";
+                 font-size: 29px;
+                 font-weight: bold;
+                  margin-bottom: 10px;
+}
+
+
+            .login__form {
+
+                font-size: 15px;
+                font-weight: bold;
+                margin-top: 300px;
+                background-color: #fff;
+
+
+                height: 380px; /* высота блока 300px */
+                width: 425px; /* ширина блока 400px */
+                margin-left: 350px; /* отступ слева 50px */
+
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                padding: 15px;
+                margin-bottom: 1px;
+                border-radius: 1px;
+                border: none;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+            }
+
+            button[type="submit"] {
+                padding: 15px;
+                border-radius: 11px;
+                border: none;
+                background-color: #007bff;
+                color: #fff;
+                cursor:pointer ;
+                font-size: 13px; /* размер шрифта 20px */
+                font-weight: bold; /* жирный шрифт */
+
+            }
+
+            button[type="submit"]:hover {
+                background-color: #0069d9;
+            }
+        </style>
+
+    </div>
+{% endblock %}

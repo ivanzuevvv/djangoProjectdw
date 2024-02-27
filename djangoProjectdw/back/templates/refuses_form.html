@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h4 style="margin-top: 15px; margin-bottom: 20px;">Экспертная система отказ СА<p style="text-align:justify;">Определение отказавшего элемента, формирование мероприятия по недопущению отказа</p></h4>
+
+<form method="post">
+  {% csrf_token %}
+  <label for="type_refuses">Тип отказа:</label>
+  <input list="type_refuses_list" name="type_refuses" autocomplete="on"  id="type_refuses" value="{{ request.POST.type_refuses }}"  style="width: 9%; ">
+  <datalist id="type_refuses_list">
+    {% for type in type_refuses %}
+      <option value="{{ type }}">
+    {% endfor %}
+  </datalist>
+
+
+  <label for="type_gpa">Тип ГПА:</label>
+  <input list="type_gpa_list" name="type_gpa" id="type_gpa" value="{{ request.POST.type_gpa }}"  style="width: 12%; " >
+
+  <datalist id="type_gpa_list">
+    {% for type in type_gpa %}
+      <option value="{{ type }}">
+    {% endfor %}
+  </datalist>
+
+
+  <label for="type_say">Тип САУ:</label>
+  <input list="type_say_list" name="type_say" id="type_say" value="{{ request.POST.type_say }}"  style="width: 12%; " >
+  <datalist id="type_say_list">
+    {% for type in type_say %}
+      <option value="{{ type }}">
+    {% endfor %}
+  </datalist>
+
+
+
+<input type="submit" class="btn btn-primary btn-sm" value="Найти отказа" style="margin-top: -1mm; margin-left: 1px; text-align: center;">
+ <label for="type_equioment">Внешнее проявления отказа:</label>
+
+  <input list="type_equioment_list" name="type_equioment" id="type_equiomentt" value="{{ request.POST.type_equioment }}" style="width: 26%; ">
+
+  <datalist id="type_equioment_list">
+    {% for type in type_equioment%}
+      <option value="{{ type }}">
+    {% endfor %}
+  </datalist>
+
+<input type="submit" value="Найти решение" class="btn btn-primary" style="margin-top: 10mm; margin-left: 30px; text-align: center;">
+<button class="btn btn-primary" style="margin-left: 70px; margin-top: 10mm; text-align: center;"><a href="" style="display: block; color: white;">Обновить</a></button>
+
+
+
+</form>
+
+
+{% if predictions %}
+  <table style="margin-top: 20px;">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="margin-top: 1cm;">Отказавший элемент</th>
+          <th style="margin-top: 1cm;">Возможные причины отказа</th>
+          <th style="margin-top: 1cm;">Мероприятия по повышению надежности</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prediction in predictions %}
+          <tr style="margin-top: 2cm;">
+            <td>{{ prediction.element }}</td>
+            <td>{{ prediction.maybe_reasons }}</td>
+            <td>{{ prediction.meropriation }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </table>
+{% else %}
+  {% if form.is_bound and form.is_valid %}
+    <p style="margin-top: 20px;">Нет прогнозов, удовлетворяющих выбранным критериям.</p>
+  {% endif %}
+{% endif %}
+
+{% endblock %}
+
+
+<script>
+</script>

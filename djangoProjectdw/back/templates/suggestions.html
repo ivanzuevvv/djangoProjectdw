@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'back/css/style.css' %}">
+ <link rel="stylesheet" href="{% static 'bootstrap/bootstrap2.min.css' %}">
+{% endblock %}
+{% block content %}
+
+
+
+   {% if evenss %}
+
+
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Название</th>
+<th>Файл</th>
+
+
+
+
+</tr>
+</thead>
+<tbody>
+{% for e in evenss %}
+<tr>
+<td>{{ e.name }}</td>
+<td><a href="{{ e.pdf_file }}" download>Скачать PDF</a></td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+   {% endif %}
+{% endblock %}

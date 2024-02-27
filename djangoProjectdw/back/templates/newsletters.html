@@ -1,0 +1,63 @@
+
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'back/css/style.css' %}">
+ <link rel="stylesheet" href="{% static 'bootstrap/bootstrap2.min.css' %}">
+{% endblock %}
+{% block content %}
+
+
+<h4 style="margin-top: 10px; margin-bottom: 20px;">Информационные письма {{ user.last_name }}</h4>
+
+
+
+
+
+
+   {% if evenss %}
+
+
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>ЛПУ</th>
+<th>Цех</th>
+<th>ГПА</th>
+<th>Наименования ИП</th>
+<th>Тип оборудования</th>
+<th>ИП</th>
+<th>Выполнения</th>
+<th>Причина не выполнения</th>
+<th>Отметить</th>
+
+
+
+
+</tr>
+</thead>
+<tbody>
+{% for e in evenss %}
+<tr>
+<td>{{ e.lpu }}</td>
+<td>{{ e.department }}</td>
+<td>{{ e.gpa_number }}</td>
+<td>{{ e.ip }}</td>
+<td>{{ e.type_equipment }}</td>
+<td>{{ e.ip_number }}</td>
+<td>{% if e.done %}
+    {{ e.done }}
+{% endif %}</td>
+
+<td>{% if e.reason %}
+    {{ e.reason}}
+{% endif %}</td>
+<td><a href="{% url 'updates' pk=e.pk %}">Отметить</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+   {% endif %}
+{% endblock %}

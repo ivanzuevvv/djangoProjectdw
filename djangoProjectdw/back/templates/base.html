@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+ <title>{% block title %}{% endblock %}</title>
+ <!-- подключение стилей и скриптов -->
+ <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+  <script src="{% static 'bootstrap/jquery-3.3.1.slim.min.js.js' %}"></script>
+   <script src="{% static 'bootstrap/popper.min' %}"></script>
+   <script src="{% static 'bootstrap/bootstrap.min' %}"></script>
+   <script src="{% static 'bootstrap/jquery-3.5.1.slim.min' %}"></script>
+
+
+
+<style>
+ .o {
+    margin-top: -0px;
+
+  align-items: center;
+}
+
+.o > li {
+  margin-left: 430px;
+     margin-top: -10px;
+
+}
+
+
+.navbar-nav > li:not(:last-child) {
+  margin-right: 15px;
+}
+
+
+</style>
+
+
+<a class="navbar-brand mr-auto d-flex align-items-center bg-primary text-white navbar-brand" href="{% url 'index' %}" style="pointer-events: none;">
+  <img src="{% static 'back/images/logo.jpg' %}" height="50" width="80" alt="Логотип" class="mr-3 ml-3">
+  <div class="d-flex flex-column align-items-start">
+    <span class="text-white">АИС Повышение надежности систем автоматизации</span>
+    <small class="text-white">Отдел АСУТП САиМО ИТЦ</small>
+  </div>
+</a>
+
+<body>
+
+
+
+ <!-- навигационное меню -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse ml-auto" id="navbarNav">
+  <ul class="navbar-nav nav-fill">
+    {% with request.resolver_match.url_name as current_page %}
+      <li class="nav-item {% if current_page == 'index' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'index' %}">Главная</a>
+      </li>
+      <li class="nav-item {% if current_page == 'k' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'k' %}">Мероприятия</a>
+      </li>
+      <li class="nav-item dropdown {% if current_page == 'newsletters' %}active{% endif %}">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Информационные письма
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item {% if current_page == 'newsletters' %}active{% endif %}" href="{% url 'newsletters' %}">Информационные письма</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'control'  %}">Контроль внедрения</a>
+        <a class="dropdown-item" href="{% url 'reister' %}"> Реестр ип</a>
+      </div>
+      </li>
+      <li class="nav-item {% if current_page == 'suggestions' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'suggestions' %}">Рационализаторские предложения</a>
+      </li>
+      <li class="nav-item {% if current_page == 'documentation' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'documentation' %}">Документация</a>
+      </li>
+<li class="nav-item dropdown {% if current_page == 'anazliz' %}active{% endif %}">
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  Аналитика
+</a>
+
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <span class="dropdown-item-text">Экспертная система отказа</span>
+  <div class="dropdown-divider"></div>
+  <div class="dropdown-submenu">
+    <a class="dropdown-item {% if current_page == 'predictions' %}active{% endif %}" href="{% url 'predictions' %}">По внешнему проявлению</a>
+    <a class="dropdown-item {% if current_page == 'analiz' %}active{% endif %}" href="{% url 'analiz' %}">По отказавшему элементу</a>
+    <!-- Добавьте здесь другие элементы выпадающего списка, если необходимо -->
+  </div>
+</div>
+</li>
+
+ <script>
+    $(document).ready(function() {
+      $('.dropdown-toggle').click(function() {
+        $(this).next('.dropdown-menu').toggle();
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+        <ul class="o">
+  {% if request.user.is_authenticated %}
+
+    <li class="nav-link navbar-btn">
+      <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+    </li>
+  {% else %}
+    <li class="nav-item navbar-btn">
+      <a class="nav-link" href="{% url 'login' %}">Войти</a>
+    </li>
+
+  {% endif %}
+</ul>
+
+
+
+    {% endwith %}
+  </ul>
+</div>
+
+</div>
+
+
+ </nav>
+
+
+ <!-- содержимое страницы -->
+ <div class="container-fluid">
+  {% block content %}
+  {% endblock %}
+ </div>
+
+ <!-- подключение других скриптов -->
+</body>
+</html>

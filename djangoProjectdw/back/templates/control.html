@@ -1,0 +1,103 @@
+
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'back/css/style.css' %}">
+ <link rel="stylesheet" href="{% static 'bootstrap/bootstrap2.min.css' %}">
+{% endblock %}
+{% block content %}
+
+
+<style>
+.category-dropdown ul {
+  list-style-type: none;
+  padding-left: 3px;
+}
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  padding: 7px; /* измените значение padding по своему усмотрению */
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+</style>
+
+
+
+
+
+
+
+<h4 style="margin-top: 10px; margin-bottom: 20px;">Контроль внедрения {{ user.last_name }}</h4>
+
+
+
+
+
+   {% if evenss %}
+
+
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>ЛПУ</th>
+<th>КС</th>
+<th>Цех</th>
+<th>ГПА</th>
+<th>Тип ГПА</th>
+<th>Модификация САУ ГПА</th>
+<th>Наименования ИП</th>
+<th>Тип оборудования</th>
+<th>ИП</th>
+<th>Выполнено</th>
+<th>Примечания</th>
+    <th>Отметка</th>
+
+
+<div class="category-dropdown">
+
+    <ul>
+    <li class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Выберите категорию<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        {% for category5 in categories5 %}
+          <li><a href="{% url 'control2' category5.name %}">{{ category5.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    </ul>
+</div>
+
+</tr>
+</thead>
+<tbody>
+{% for e in evenss %}
+<tr>
+<td>{{ e.lpu }}</td>
+<td>{{ e.station }}</td>
+<td>{{ e.department }}</td>
+<td>{{ e.gpa_number }}</td>
+<td>{{ e.gpa_typle }}</td>
+<td>{{ e.sau_modifications }}</td>
+<td>{{ e.n_ip }}</td>
+<td>{{ e.type_equioment }}</td>
+<td>{{ e.ip }}</td>
+<td>{% if e.category5 %}
+    {{ e.category5 }}
+{% endif %}</td>
+
+<td>{% if e.text %}
+    {{ e.text}}
+{% endif %}</td>
+<td><a href="{% url 'updatesss' pk=e.pk %}">Отметить</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+   {% endif %}
+{% endblock %}

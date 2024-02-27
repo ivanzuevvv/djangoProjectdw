@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ request.user.username }}{% endblock %}
+
+
+<style>
+    container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+</style>
+
+{% block content %}
+        <div class="container">
+        <h2 class="heading">Информация профиля</h2>
+        <ul class="user__info-list list">
+            <li class="user__info-item">Имя: <span class="user__span">{{ user_info.username }}</span></li>
+
+        </ul>
+    </div>
+
+{% endblock %}

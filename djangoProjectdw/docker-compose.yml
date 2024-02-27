@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  web:
+    container_name: ais_web
+    image: ais_monitor
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c " python manage.py collectstatic --no-input && gunicorn --timeout 6000 djangoProject1.wsgi:application --bind 0.0.0.0:3000"
+
+    volumes:
+      - static_volume:/djangoProject1/staticfiles
+
+    environment:
+      - DEBUG='False'
+      - DB_NAME=reliability
+      - DB_USER=reliability_user
+      - DB_PASSWORD=oY?NDIWylv@5Wv
+      - DB_HOST=10.38.12.76
+      - DB_PORT=5433
+
+  nginx:
+    container_name: ais_nginx
+    image: ais_nginx
+    build: ./nginx
+    volumes:
+      - static_volume:/staticfiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+volumes:
+  static_volume:

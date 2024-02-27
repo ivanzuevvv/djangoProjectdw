@@ -1,0 +1,40 @@
+
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'back/css/style.css' %}">
+ <link rel="stylesheet" href="{% static 'bootstrap/bootstrap2.min.css' %}">
+{% endblock %}
+{% block content %}
+
+
+   {% if documents %}
+
+
+
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Название</th>
+<th>Файл</th>
+
+
+
+
+</tr>
+</thead>
+<tbody>
+{% for document in documents %}
+<tr>
+<td>{{ document.name }}</td>
+<td><a href="{% url 'download1' document.id %}">Download</a>
+</td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+   {% endif %}
+{% endblock %}

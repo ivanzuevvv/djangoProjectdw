@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+{% if object %}
+<input type="hidden" name="complete" value="{{ object.complete }}">
+{% endif %}
+<input type="submit" value="Сохранить">
+</form>
+<style>
+
+    form {
+ display: inline-block;
+  width: 150px;
+  text-align: left;
+  margin-right: 10px;
+
+
+}
+
+
+
+</style>
+
+
+
+{% endblock %}
