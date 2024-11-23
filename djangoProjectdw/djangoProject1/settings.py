@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-^iatdwwlf&=ng7$n5pg=_kg1fln2p4x7imu-9f&jgj=#t(_jjx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,19 +79,12 @@ WSGI_APPLICATION = 'djangoProject1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'back.sqlite3',
-#    }
-#}
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'back.sqlite3',
+    }
+}
 
 
 

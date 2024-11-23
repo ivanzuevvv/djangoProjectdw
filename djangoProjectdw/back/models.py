@@ -306,6 +306,15 @@ class Document1(models.Model):
         verbose_name_plural = 'Рац предложения'
 
 
+class Document6(models.Model):
+    name = models.CharField(max_length=500, verbose_name="Имя")
+    document = models.FileField(upload_to='documents6/')
+
+    class Meta:
+        verbose_name = 'Отчеты'
+        verbose_name_plural = 'Отчеты'
+
+
 class Predicions(models.Model):
     type_refuses = models.CharField(max_length=500, verbose_name="тип отказа")
     type_gpa = models.CharField(max_length=500, verbose_name="Тип ГПА")
@@ -321,3 +330,89 @@ class Predicions(models.Model):
         verbose_name_plural = 'Экспертная система отказ СА'
 
 
+
+class NotEven(models.Model):
+    station = models.CharField(max_length=50, null=True, verbose_name="Cтанция")
+    department = models.CharField(max_length=500, null=True, verbose_name="Цех")
+    gpa_number = models.IntegerField(verbose_name="Номер Гпа", null=True)
+    sau_modifications = models.CharField(max_length=100, null=True, verbose_name="Модификация САУ")
+    complete = models.IntegerField(verbose_name="Выполнено", blank=True, null=True, default=0)
+    text = models.CharField(max_length=50, verbose_name="Примечания", blank=True, null=True)
+
+    CVARTAL_CHOICES = [
+        ('-', '-'),
+        ('ТО3', 'ТО3'),
+        ('ТО4', 'ТО4'),
+        ('ТО5', 'ТО5'),
+        ('ТО6', 'ТО6'),
+    ]
+
+    cvartal1 = models.CharField(verbose_name="1", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal2 = models.CharField(verbose_name="2", default='-', max_length=3, blank=True,  choices=CVARTAL_CHOICES)
+    cvartal3 = models.CharField(verbose_name="3", default='-', max_length=3, blank=True,  choices=CVARTAL_CHOICES)
+    cvartal4 = models.CharField(verbose_name="4", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal5 = models.CharField(verbose_name="5", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal6 = models.CharField(verbose_name="6", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal7 = models.CharField(verbose_name="7", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal8 = models.CharField(verbose_name="8", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal9 = models.CharField(verbose_name="9", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal10 = models.CharField(verbose_name="10", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal11 = models.CharField(verbose_name="11", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+    cvartal12 = models.CharField(verbose_name="12", default='-', max_length=3, blank=True, choices=CVARTAL_CHOICES)
+
+    category = models.ForeignKey('Category4', on_delete=models.PROTECT, verbose_name="Категории4", blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    def total_complete(self):
+        return NotEven.objects.filter(category4=self.category).aggregate(Sum('complete'))['complete__sum']
+    total_complete.short_description = 'Сумма выполненных работ'
+
+    def str(self):
+        return self.station
+
+    class Meta:
+        verbose_name = 'Мероприятия 2'
+        verbose_name_plural = 'Мероприятия 2'
+
+    def is_complete(self):
+        return self.complete >= self.plan
+
+    @classmethod
+    def completed(cls):
+        return cls.objects.filter(complete__gte=F('plan'))
+
+    @classmethod
+    def not_completed(cls):
+        return cls.objects.filter(complete__lt=F('plan'))
+
+
+
+class Category4(models.Model):
+    name = models.CharField(max_length=100, db_index=True, verbose_name="Категория4", blank=True, null=True)
+    summa = models.IntegerField(verbose_name="cумма", blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категория4'
+        verbose_name_plural = 'Категории4'
+
+
+
+class ChatResponse(models.Model):
+    keyword = models.CharField(max_length=100, unique=True)
+    response = models.TextField()
+
+    def __str__(self):
+        return self.keyword
+
+
+class DialogueStep(models.Model):
+    question = models.TextField()  # Вопрос бота
+    expected_answer = models.TextField(blank=True, null=True)  # Ожидаемый ответ (или ключевое слово)
+    bot_response = models.TextField()  # Ответ бота
+
+    next_step = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='previous_step')
+
+    def __str__(self):
+        return self.question

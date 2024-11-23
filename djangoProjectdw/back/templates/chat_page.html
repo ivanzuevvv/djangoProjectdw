@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат с ботом</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .chat-box {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .messages {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        .message {
+            margin: 5px 0;
+        }
+        .message.user {
+            text-align: right;
+            color: blue;
+        }
+        .message.bot {
+            text-align: left;
+            color: green;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-box">
+        <h3>Чат с ботом</h3>
+        <div class="messages" id="messages"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Введите сообщение..." />
+            <button onclick="sendMessage()">Отправить</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const messagesDiv = document.getElementById('messages');
+
+            const userMessage = input.value.trim();
+            if (!userMessage) return;
+
+            // Добавляем сообщение пользователя в чат
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.textContent = userMessage;
+            messagesDiv.appendChild(userDiv);
+
+            input.value = '';
+
+            // Отправляем сообщение на сервер
+            const response = await fetch('/chat/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ message: userMessage })
+            });
+
+            const data = await response.json();
+
+            // Добавляем ответ бота в чат
+            const botDiv = document.createElement('div');
+            botDiv.className = 'message bot';
+            botDiv.textContent = data.response;
+            messagesDiv.appendChild(botDiv);
+
+            // Скроллим вниз
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Получаем CSRF-токен
+        function getCookie(name) {
+            const value = ; ${document.cookie};
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    </script>
+</body>
+</html>

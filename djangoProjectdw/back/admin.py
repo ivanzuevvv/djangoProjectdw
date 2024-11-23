@@ -36,8 +36,13 @@ class PredicionsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('type_refuses', 'type_gpa', 'type_say', 'type_equioment', 'element', 'maybe_reasons', 'meropriation',)
 
 
+class NotEvendmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('station', 'department', 'gpa_number', 'sau_modifications', 'complete', 'cvartal1', 'cvartal2', 'cvartal3',
+                    'cvartal4', 'cvartal5', 'cvartal6', 'cvartal7', 'cvartal8', 'cvartal9', 'cvartal10', 'cvartal11', 'cvartal12', 'category', 'user')
 
 
+
+admin.site.register(ChatResponse)
 # Register your models here.
 admin.site.register(Plan)
 admin.site.register(Execution, ExecutionAdmin)
@@ -69,4 +74,8 @@ admin.site.register(Document1)
 admin.site.register(Predicions, PredicionsAdmin)
 admin.site.register(Category5)
 admin.site.register(Cvartals)
+admin.site.register(Document6)
+admin.site.register(NotEven, NotEvendmin)
+admin.site.register(Category4)
 
+admin.site.register(DialogueStep)

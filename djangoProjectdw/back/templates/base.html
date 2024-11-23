@@ -74,14 +74,30 @@
       </li>
       <li class="nav-item {% if current_page == 'suggestions' %}active{% endif %}">
         <a class="nav-link" href="{% url 'suggestions' %}">Рационализаторские предложения</a>
+      <li class="nav-item {% if current_page == 'report' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'report' %}">Отчеты</a>
       </li>
+       <li class="nav-item {% if current_page == 'Notk' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'Notk' %}">Тех.обслуживание</a>
+      </li>
+
       <li class="nav-item {% if current_page == 'documentation' %}active{% endif %}">
         <a class="nav-link" href="{% url 'documentation' %}">Документация</a>
       </li>
+
+      <li class="nav-item {% if current_page == 'chat2_page' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'chat2_page' %}">Чат помощник</a>
+      </li>
+
+
+
+
+
 <li class="nav-item dropdown {% if current_page == 'anazliz' %}active{% endif %}">
 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   Аналитика
 </a>
+
 
 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
       <span class="dropdown-item-text">Экспертная система отказа</span>

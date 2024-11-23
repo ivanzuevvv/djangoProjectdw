@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат с экспертом</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+
+            background-color: #fff;
+        }
+        .chat-box {
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            padding: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .messages {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+            border-radius: 5px;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .message.user {
+            text-align: right;
+            color: blue;
+        }
+        .message.bot {
+            text-align: left;
+            color: green;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="chat-box">
+        <h3>Чат с экспертом</h3>
+        <div class="messages">
+            <div class="message bot"><strong>Бот:</strong> {{ bot_message }}</div>
+            {% if user_message %}
+            <div class="message user"><strong>Вы:</strong> {{ user_message }}</div>
+            {% endif %}
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="step" value="{{ step }}">
+            <input type="text" name="message" placeholder="Введите сообщение..." required>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

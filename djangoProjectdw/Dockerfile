@@ -1,15 +1,20 @@
-FROM python:3.9-slim
+# Базовый образ
+FROM python:3.9-alpine
 
-WORKDIR  /djangoProject1
+# Установка рабочей директории
+WORKDIR /djangoProjectdw
 
+# Обновление пакетов и установка зависимостей
+RUN apk update && apk add --no-cache gcc musl-dev linux-headers
 
-RUN apt-get update
-
+# Установка зависимостей Python
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# Обновление pip и установка зависимостей Python
 RUN pip install --upgrade pip
-COPY requirements.txt requirements.txt
+COPY requirements.txt /djangoProjectdw/requirements.txt
 RUN pip install -r requirements.txt
 
-COPY . .
+# Копирование кода приложения
+COPY . /djangoProjectdw
